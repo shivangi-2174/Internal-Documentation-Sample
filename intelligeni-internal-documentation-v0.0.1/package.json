@@ -1,0 +1,23 @@
+{
+  "name": "intelligeni-internal-documentation",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/intelligeni-documentation/intelligeni-internal-documentation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/intelligeni-documentation/intelligeni-internal-documentation/issues"
+  },
+  "homepage": "https://gitlab.com/intelligeni-documentation/intelligeni-internal-documentation#readme",
+  "description": ""
+}
