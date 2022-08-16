@@ -6,17 +6,21 @@ Problem Statement
 
 **Intern Name:** Shivangi
 
-**Mentor:** Dolly
+**Mentor:** Prabodh
 
 -	**Objective:** Enhance the current health state model to include reachability aspects, behavior model
--	**Approach:** Rule based algorithm (not Pregel based); existing libraries/ technologies can be evaluated for introducing better technologies
--	**Outcome expected:** Backend implementation of Health State Computations model
+-	**Approach:** Rule based algorithm (Pregel based); existing libraries/ technologies can be evaluated for introducing better technologies
+-	**Outcome expected:** Backend implementation of Health State Computations Model
+
+**GraphX Programming Guide** - `<https://spark.apache.org/docs/latest/graphx-programming-guide.html>`_
+
+**Pregel API** - https://spark.apache.org/docs/latest/graphx-programming-guide.html#pregel-api
 
 Technology Stack Used
 ########
 
 - Scala/Spark
-- Pregel
+- Pregel API
 
 Solution
 ########
