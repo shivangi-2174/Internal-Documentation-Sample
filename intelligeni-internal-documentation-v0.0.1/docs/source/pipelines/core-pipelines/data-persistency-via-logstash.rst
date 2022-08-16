@@ -1,0 +1,6 @@
+Persisting Data to Elasticsearch
+==================================
+
+All other stages we do the stream processing where we receive message from one stream and sends to another stream. The data in streams stays for a limited period and are not queryable. Thus it's essential to persist all those data to a database so that those data can queried and can also be used for any historical data analysis. So to achieve the same we use logstash that receives messages from all those streams and writes to elasticsearch indexes. We have dedicated indexes for each stream. All stream data are directly inserted to elasticsearch except for scenario_master stream. Scenario stream data is indexed to elasticsearch using upsert(update/insert) mechanism.
+
+We have used separate configs for each stream and are processing using logstash pipeline with dedicated threads so that all data can be persisted as fast as possible. With this we ensure more data on one stream doesn't delay writing of data for other streams.
