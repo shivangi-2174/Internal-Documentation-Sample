@@ -39,13 +39,17 @@ We will be using a sample knowledge graph as a reference where we have listed do
 
                                                                       Sample Knowledge Graph
 
-.. figure:: sampleKnowledgeGraph.jpg
+.. figure:: sampleKnowledgeGraphwithStates.jpg
     :alt: Process
     :figclass: align-center
 
   
   
 **Tabular Representation of above sample graph**
+
+.. figure:: TabularRepresentationBeforePregel.PNG
+    :alt: Process
+    :figclass: align-center
 
 For sample date, we are assuming some of the CIs to be in active state which means that they have received some alerts which causes change in their health state. We are maintaining a Set datatype which well serve 2 purposes.
 
@@ -59,11 +63,41 @@ To propagate the health states, we have maintained a rulebook.json file which st
     :figclass: align-center
 
 
-Using this 
+https://github.com/shivangi-2174/Internal-Documentation-Sample/blob/main/intelligeni-internal-documentation-v0.0.1/docs/source/internship-projects/rulebook.json
 
-  
+Using this rulebook, we are using nested mapping, where our key will be the **source_state** and it will have multiple values which will again be a map having key-value pair of **relationship** and **destination_state**.
+
+- **Map  ( srcState ->  Map  (rel -> dstState)  )**
+
+**Logic Used** 
+
+Logic behind the algorithm is that for each CI in a particular health state, we are checking the value in the map for the src_state as well for the inner map with key as relationship and value as dst_state.
 
 Result
 ######
 
+- We have successfully propaged the health states of CIs till the service level.
+- We have merged both the Health State and Health Score Code.
+- Use of external json Rulebook helps us to achieve flexibility and allow us to redefine our rules in future.
 
+**Required Output After running Pregel**
+
+.. figure:: TabularRepresentationAfterPregel.PNG
+    :alt: Process
+    :figclass: align-center
+    
+**Output for Health State**    
+ 
+ 
+.. figure:: finalOutputState.PNG
+    :alt: Process
+    :figclass: align-center
+    
+    
+**Output for Health Score**  
+
+ 
+.. figure:: finalOutput.PNG
+    :alt: Process
+    :figclass: align-center
+       
