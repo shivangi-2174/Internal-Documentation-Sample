@@ -1,0 +1,32 @@
+Release Notes v2.2.2
+================================================
+
+*Multi tenancy*
+    - Enabled a single instance of Intelligeni to serve multiple customers
+    - Handled data isolation between the tenants
+    - Introduction of a new role – Superadmin
+    - Handled management of core instance
+        - Ability to Add, delete a tenant
+        - Ability to Add tenant admin from outside the tenant
+
+
+*Zone as a list*
+    - System now accommodates a CI to be part of multiple Zones
+ 
+
+*User Management*
+    - Enabled addition of a user in to a tenant context
+    - Enabled the ability of a user to be part of multiple tenants
+    - Enabled a user to have different roles in different tenants
+ 
+
+*Tech Debts*
+    - Incorrect Admin Statistics correction
+    - User list should not show service accounts in admin page, chatops section
+    - Reduced multiple redis calls by merging them under single request
+    - Improved logging for pipeline
+    - Metric data does not load fine when requested from chatops
+    - On exploration UI, the alert count is not in sync with scenario
+    - New user creation is enabled even if the user already exists in the system. Update flow to be enabled
+    - New service creation flow has unnecessary fields like edge and location which Is not used. Use only mandatory information.
+    - Email communication to be enabled for user creation

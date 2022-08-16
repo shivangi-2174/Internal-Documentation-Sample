@@ -1,0 +1,23 @@
+Release Notes v2.0.6
+================================================
+
+    *Metrics Flow*
+        - Forecasting/Anomaly Detection flow standardized. Will now be a plug in for any integration.
+         
+    *Standardization & Refactoring*
+        - Azure flow refactored
+        - Beats flow Refactored and created a single agent
+
+    *Upgrade*
+        - Upgrade of Elastic Version in Core to 7.10.2
+        - Upgrade of Elastic Version in Core to 7.10.2
+        - Upgrade of Gray Log in Edge to 4.0.0
+        - Upgrade of Gray Log in Edge to 4.2.2 to handle the Log4J vulnerability issue
+    
+    *Graph rendering optimizations*
+        - Adjusting forces across parameters: link, charge, center, collide and axis.
+        - Adjusting positions for nodes while entering/exiting the graph. (This will further help in the expand/collapse options)
+        - Fix for graph getting distorted when selecting/deselecting labels.
+        - Fix for graph getting distorted while changing tabs on exploration UI.
+
+    *VAPT Fix*

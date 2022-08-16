@@ -1,0 +1,39 @@
+Release Notes v2.1.1
+================================================
+
+*Scenario toolkit - Exploration UI*
+    - New user experience to diagnose a scenario.
+
+    - Critical stats and actions related to scenario are readily available.
+
+    - From a scenario, a user can now quickly hop to critical alerts/what has changed/similar scenarios.
+
+*CI toolkit - exploration UI*
+    - New user experience to drill down to CI information.
+
+    - Recent alerts, health and critical metrics information for the selected CI is readily available.
+
+    - User can trend and stats for metrics on a CI with a single click.
+
+*Health widget Improvements - code sanity and user experience*
+
+*Exploration UI Improvements - general design and layout changes*
+
+*Graph Improvements - code sanity and user experience*
+
+*Bug fixes*
+    - Join scenario button in chatops barely visible in dark theme
+
+    - Some relationships not visible in graph - resolved some errors in d3 force graph calculations
+
+    - While onboarding notifications should not come when there is no verification (Fixed in 2.0.1)
+
+    - Notifications should stay and update in onboarding verification (Fixed in 2.0.1)
+
+    - Form validation on onboarding substeps (Fixed in 2.0.1)
+
+    - Zones not coming from earlier created list of zones (Fixed in 2.0.1)
+
+    - Zone deletion finish - send a notification to user once it is done  (Fixed in 2.0.1)
+
+    - Notifications are not pushed to UI (Fixed in 2.0.1)
