@@ -89,6 +89,13 @@ Intelligeni-Internal's documentation!
    :name: codingstandard
 
    codingstandard/index
+   
+.. toctree::
+   :maxdepth: 2
+   :caption: Internship Projects
+   :name: internship-projects
+
+   internship-projects/index
 
 .. Indices and tables
 .. ------------------
