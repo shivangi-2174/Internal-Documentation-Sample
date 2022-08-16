@@ -1,58 +1,69 @@
 Health State Computation Model
 ================================================
 
-**************
-Sample Knowledge Graph
-**************
-
-.. figure:: Picture1.PNG
-    :alt: Process
-    :figclass: align-center
-
-Heatmap
+Problem Statement
 ########
 
-**Purpose**
+**Intern Name:** Shivangi
 
-The observability feature is introduced with an aim to help the user to get a visibility into the monitoring state of their environment and helping them to improve it. Currently, only metrics are supported, but the plan is to bring in logs and traces to provide complete observability.
+**Mentor:** Dolly
+
+-	**Objective:** Enhance the current health state model to include reachability aspects, behavior model
+-	**Approach:** Rule based algorithm (not Pregel based); existing libraries/ technologies can be evaluated for introducing better technologies
+-	**Outcome expected:** Backend implementation of Health State Computations model
+
+Technology Stack Used
+########
+
+- Scala/Spark
+- Pregel
+
+Solution
+########
+
+**Current Scenario**
+
+- In our existing model, we are calculating the health state individually for all CIs based on the alerts received. 
+- We have pregel funtion for only the health score computation.
+
+**Aim**
+
+- Our aim is to achieve the propagation of these health states genarated on individual CI till the last level.
+- Using a rule based approach (Pregel based), we will be propagating the health states of the CIs till the service level.
+- We will merge both the Health State and Health Score Computation Algorithms.
+
+**Approach**
+
+We will be using a sample knowledge graph as a reference where we have listed down the CIs and relationship between them.
 
 
-**Terminologies**
+                                                                      Sample Knowledge Graph
 
-- **Metric**: A metric is a value that is measured by the system.
-- **IG metrics**: Metrics under CI types, that are considered to be important by Intelligeni
-- **Observable metrics**: Metrics that are available under a CI
-- **Actively monitored metrics**: Metrics that are actively monitored (Some alert rule or anomaly detection is set on them)
-- **QOS impact type**: The Quality of Service tag that is assigned to a metric.
-
-**Intelligeni Metrics**
-
-- These are metrics that are considered to be important by Intelligeni
-- These metrics would be under an Intelligeni CI type (host, application, etc.)
-- These would be pre-classified into QoS types, so additional lookup at metric discovery for the same is not needed.
-- These would be the metrics for which Intelligeni would attempt to compute observability score i.e. important metrics
-- Any other metric not mapped to these would be classified as a generic metric and not used for observability calculation, this is so that in Intelligeni’s opinion there will be a few set of metrics that it would want the customer to monitor. Anything extra is always welcome but not scored.
-
-**Heatmap computation process**
-
-- Master metric mapping (For integrations supported by us) and IG metric list will be maintained by us.
-- A user will only be able to map metrics that have not been mapped by us. This is because all the mappings from Intelligeni are Intelligeni opinions. Any changes to our mapping can be obtained as feedback. (Upcoming feature)
-- Metrics discovery occurs via edge. When it comes to the core, before indexing in cimetrics, a lookup will be done from the metric mapping (that will consist of both IG mapping and user-defined mapping) and corresponding IG metric would be added in the document, by default it will be genericMetric.
-- Observability will fetch the IG metrics list for a citype and compare from cimetrics as to what metrics are available, not available, and actively monitored and compute the observability score.
-
-**Flowcharts**
-
-
-
-.. figure:: end-to-end-flow.JPG
+.. figure:: sampleKnowledgeGraph.jpg
     :alt: Process
     :figclass: align-center
 
-    Overall process behind observability computation
+  
+  
+**Tabular Representation of above sample graph**
 
-.. figure:: heatmap-compute.JPG
-    :alt: alternate text
+For sample date, we are assuming some of the CIs to be in active state which means that they have received some alerts which causes change in their health state. We are maintaining a Set datatype which well serve 2 purposes.
+
+- to store all the health states propagated from different CIs.
+- Set will store unique values.
+
+To propagate the health states, we have maintained a rulebook.json file which stores data in the given format.
+
+.. figure:: rulebook.png
+    :alt: Process
     :figclass: align-center
 
-    Observability heatmap computation
+
+Using this 
+
+  
+
+Result
+######
+
 
