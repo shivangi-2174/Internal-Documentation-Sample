@@ -16,7 +16,7 @@ Problem Statement
 
 **Pregel API** - https://spark.apache.org/docs/latest/graphx-programming-guide.html#pregel-api
 
-Technology Stack Used
+Technology Stack
 ########
 
 - Scala/Spark
@@ -41,14 +41,15 @@ Solution
 We will be using a sample knowledge graph as a reference where we have listed down the CIs and relationship between them.
 
 
-                                                                      Sample Knowledge Graph
+**Sample Knowledge Graph**
 
 .. figure:: sampleKnowledgeGraphwithStates.jpg
     :alt: Process
     :figclass: align-center
 
-  
-  
+ 
+ 
+ 
 **Tabular Representation of above sample graph**
 
 .. figure:: TabularRepresentationBeforePregel.PNG
@@ -69,11 +70,12 @@ To propagate the health states, we have maintained a rulebook.json file which st
 
 https://github.com/shivangi-2174/Internal-Documentation-Sample/blob/main/intelligeni-internal-documentation-v0.0.1/docs/source/internship-projects/rulebook.json
 
+
+**Algorithm** 
+
 Using this rulebook, we are using nested mapping, where our key will be the **source_state** and it will have multiple values which will again be a map having key-value pair of **relationship** and **destination_state**.
 
 - **Map  ( srcState ->  Map  (rel -> dstState)  )**
-
-**Logic Used** 
 
 Logic behind the algorithm is that for each CI in a particular health state, we are checking the value in the map for the src_state as well for the inner map with key as relationship and value as dst_state.
 
@@ -81,15 +83,16 @@ Result
 ######
 
 - We have successfully propaged the health states of CIs till the service level.
-- We have merged both the Health State and Health Score Code.
 - Use of external json Rulebook helps us to achieve flexibility and allow us to redefine our rules in future.
+- We have merged both the Health State and Health Score Code.
 
 **Required Output After running Pregel**
 
 .. figure:: TabularRepresentationAfterPregel.PNG
     :alt: Process
     :figclass: align-center
-    
+
+
 **Output for Health State**    
  
  
@@ -97,7 +100,7 @@ Result
     :alt: Process
     :figclass: align-center
     
-    
+
 **Output for Health Score**  
 
  
