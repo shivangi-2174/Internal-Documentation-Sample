@@ -1,0 +1,561 @@
+# Intelligeni Core Cluster values.yaml - by Automation, Microland
+
+# ------------------------------------------------------------------------------------------------------------------------------------
+#                                                            Common Values
+# ------------------------------------------------------------------------------------------------------------------------------------
+namespace: intelligeni-core
+storageClass: intelligeni-core
+namePrefix: core
+
+common:
+  mongodb:
+    port: 27017
+  elasticsearch:
+    port: 9200
+  redis:
+    port: 6379
+
+
+# ------------------------------------------------------------------------------------------------------------------------------------
+#                                                          Templates' Values
+# ------------------------------------------------------------------------------------------------------------------------------------
+
+ingress:
+  enabled: false
+  host: "dev.intelligeni.com"
+  tls:
+    enabled: true
+    certificate:
+      secretName: intelligeni-ca-cert
+
+igCoreApp:
+  image: "us.gcr.io/automation-intelligeni-dev/ig-core-api:vx.y.z"
+  # (optional) Set replicas when autoscaling is disabled
+  # replicas: 1
+  neo4j:
+    username: "neo4j"
+    # password: ""
+  elasticsearch:
+    port: 9200
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 10
+    memory:
+      targetAvgUtil: 85
+    cpu:
+      targetAvgUtil: 90
+
+chatopsHandlerApp:
+  enabled: true
+  image: "us.gcr.io/automation-intelligeni-dev/chatops-handler:vx.y.z"
+  # (optional) Set replicas when autoscaling is disabled
+  # replicas: 1
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 8
+    memory:
+      targetAvgUtil: 85
+    cpu:
+      targetAvgUtil: 90
+
+igMlServiceApp:
+  enabled: true
+  image: "us.gcr.io/automation-intelligeni-dev/ig-ml-service:vx.y.z"
+  # (optional) Set replicas when autoscaling is disabled
+  # replicas: 1
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 6
+    memory:
+      targetAvgUtil: 85
+    cpu:
+      targetAvgUtil: 90
+
+igScenarioCreationApp:
+  image: "us.gcr.io/automation-intelligeni-dev/ig-scenario-creation:vx.y.z"
+  # (optional) Set replicas when autoscaling is disabled
+  # replicas: 1
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 10
+    memory:
+      targetAvgUtil: 85
+    cpu:
+      targetAvgUtil: 90
+
+igScenarioMetadataApp:
+  image: "us.gcr.io/automation-intelligeni-dev/ig-scenario-metadata:vx.y.z"
+  # (optional) Set replicas when autoscaling is disabled
+  # replicas: 1
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 6
+    memory:
+      targetAvgUtil: 85
+    cpu:
+      targetAvgUtil: 90
+
+igUIApp:
+  enabled: true
+  image: "us.gcr.io/automation-intelligeni-dev/ig-ui:vx.y.z"
+  # (optional) Set replicas when autoscaling is disabled
+  # replicas: 1
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    memory:
+      targetAvgUtil: 85
+    cpu:
+      targetAvgUtil: 90
+
+k8sEventDiscoveryApp:
+  enabled: true
+  image: "us.gcr.io/automation-intelligeni-dev/k8s-discovery-events-app:vx.y.z"
+  # (optional) Set replicas when autoscaling is disabled
+  # replicas: 1
+  env:
+    targetNamespace: "intelligeni-core"
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    memory:
+      targetAvgUtil: 85
+    cpu:
+      targetAvgUtil: 90
+
+topologyDiscoveryApp:
+  enabled: true
+  image: "us.gcr.io/automation-intelligeni-dev/topology-discovery-service:vx.y.z"
+  # (optional) Set replicas when autoscaling is disabled
+  # replicas: 1
+  env:
+    VAULT_FETCH_FREQ: 60
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    memory:
+      targetAvgUtil: 85
+    cpu:
+      targetAvgUtil: 90
+
+scheduledDiscoveryNodesApp:
+  enabled: true
+  image: "us.gcr.io/automation-intelligeni-dev/scheduled-discovery-nodes:vx.y.z"
+  # (optional) Set replicas when autoscaling is disabled
+  # replicas: 1
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    memory:
+      targetAvgUtil: 85
+    cpu:
+      targetAvgUtil: 90
+
+keycloakExtra:
+  env:
+    realmcoreapi: ""
+    realmtoken: ""
+
+projectConfig:
+  subscription:
+    alerts_input: "projects/<project-id>/subscriptions/dev_alerts_input"
+    alerts_final_metadata: "projects/<project-id>/subscriptions/dev_alerts_final_for_metadata"
+    discovery_data: "projects/<project-id>/subscriptions/dev-discovery-data"
+  topics:
+    alerts_input: "projects/<project-id>/topics/dev_alerts_input"
+    alerts_final: "projects/<project-id>/topics/dev_alerts_final"
+    scenario_master: "projects/<project-id>/topics/dev_scenario_master"
+    scenario_detail: "projects/<project-id>/topics/dev_scenario_detail"
+    discovery_data: "projects/<project-id>/topics/dev-discovery-data"
+  site:
+    url: ""
+  google:
+    project_id: ""
+    gcs_bucket: ""
+  vault:
+    url: ""
+    role_id: ""
+    secret_id: ""
+    secret_path: ""
+  servicenow:
+    url: ""
+    username: ""
+    password: ""
+  spark:
+    alerts_topic_id: "dev_alerts_input"
+    metrics_topic_id: "dev_derived_metrics_spark"
+    alerts_subscription_id: "dev_alerts_final_health"
+    window_length: "5"
+    number_of_windows: "2"
+
+# ------------------------------------------------------------------------------------------------------------------------------------
+#                                                         Dependencies' Values
+# ------------------------------------------------------------------------------------------------------------------------------------
+
+mongodb-core:
+  architecture: replicaset
+  replicaCount: 1
+  auth:
+    enabled: true
+    rootPassword: ""
+    replicaSetKey: ""
+  podLabels:
+    dependencyOf: intelligeni-core-cluster
+  persistence:
+    size: 10Gi
+    storageClass: intelligeni-core
+
+redis-core:
+  cluster:
+    slaveCount: 1
+  password: ""
+  master:
+    disableCommands:
+      - FLUSHALL
+    podLabels:
+      dependencyOf: intelligeni-core-cluster
+    persistence:
+      size: 5Gi
+  master:
+    slave:
+      - FLUSHALL
+    podLabels:
+      dependencyOf: intelligeni-core-cluster
+    persistence:
+      size: 5Gi
+
+mysql-core:
+  architecture: replication
+  auth:
+    rootPassword: ""
+    database: "keycloak"
+    username: ""
+    password: ""
+    replicationPassword: ""
+  primary:
+    nodeSelector:
+      # preemptible: "false"
+    persistence:
+      size: 5Gi
+  secondary:
+    replicaCount: 1
+    nodeSelector:
+      # preemptible: "false"
+    persistence:
+      size: 5Gi
+
+neo4j-core:
+  persistentVolume:
+    enabled: true
+    size: 10Gi
+  neo4jPassword: ""
+  extraVars:
+    - name: NEO4J_dbms_unmanaged__extension__classes
+      value: com.graphaware.server=/graphaware
+    - name: NEO4J_com_graphaware_runtime_enabled
+      value: "true"
+    - name: NEO4J_com_graphaware_module_UIDM_1
+      value: com.graphaware.module.uuid.UuidBootstrapper
+    - name: NEO4J_com_graphaware_module_UIDM_uuidProperty
+      value: uuid
+    - name: NEO4J_com_graphaware_module_UIDM_relationship
+      value: "true"
+    - name: NEO4J_com_graphaware_module_UIDM_uuidIndex
+      value: uuidIndex
+    - name: NEO4J_com_graphaware_module_UIDM_initializeUntil
+      value: "0"
+    - name: NEO4J_com_graphaware_module_ES_2
+      value: com.graphaware.module.es.ElasticSearchModuleBootstrapper
+    - name: NEO4J_com_graphaware_module_ES_uri
+      value: elasticsearch-master
+    - name: NEO4J_com_graphaware_module_ES_port
+      value: "9200"
+    - name: NEO4J_com_graphaware_module_ES_protocol
+      value: http
+    - name: NEO4J_com_graphaware_module_ES_index
+      value: graph
+    - name: NEO4J_com_graphaware_module_ES_keyProperty
+      value: id
+    - name: NEO4J_com_graphaware_module_ES_retryOnError
+      value: "false"
+    - name: NEO4J_com_graphaware_module_ES_queueSize
+      value: "10000"
+    - name: NEO4J_com_graphaware_module_ES_reindexBatchSize
+      value: "2000"
+    - name: NEO4J_com_graphaware_module_ES_relationship
+      value: (true)
+    - name: NEO4J_com_graphaware_module_ES_bulk
+      value: "false"
+    - name: NEO4J_com_graphaware_module_ES_initializeUntil
+      value: "2222222222222"
+    - name: NEO4J_com_graphaware_module_ES_mapping
+      value: com.graphaware.module.es.mapping.JsonFileMapping
+    - name: NEO4J_com_graphaware_module_ES_file
+      value: ../../../plugins/mapping.json
+    - name: NEO4J_dbms_memory_heap_initial__size
+      value: "2G"
+    - name: NEO4J_dbms_memory_heap_max__size
+      value: "2G"
+    - name: NEO4J_dbms_memory_pagecache__size
+      value: "1G"
+    - name: NEO4J_dbms_security_procedures_unrestricted
+      value: apoc.\\\*
+    - name: NEO4J_apoc_export_file_enabled
+      value: "true"
+    - name: NEO4J_apoc_import_file_enabled
+      value: "true"
+    - name: NEO4J_dbms_security_procedures_unrestricted
+      value: gds.*
+  initContainers:
+    - name: init-plugins
+      image: "appropriate/curl:latest"
+      imagePullPolicy: "IfNotPresent"
+      volumeMounts:
+        - name: plugins
+          mountPath: /plugins
+      command:
+        - "/bin/sh"
+        - "-c"
+        - |
+          curl -L https://storage.googleapis.com/intelligeni-public/Graylog-Neo4j-jars/neo4j/graphaware-neo4j-to-elasticsearch-3.5.4.53.11.jar -O
+          curl -L https://storage.googleapis.com/intelligeni-public/Graylog-Neo4j-jars/neo4j/graphaware-server-community-all-3.5.4.53.jar -O
+          curl -L https://storage.googleapis.com/intelligeni-public/Graylog-Neo4j-jars/neo4j/graphaware-uuid-3.5.4.53.17.jar -O
+          curl -L https://github.com/neo4j/graph-data-science/releases/download/1.1.4/neo4j-graph-data-science-1.1.4-standalone.jar -O
+          curl -L https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/3.5.0.11/apoc-3.5.0.11-all.jar -O
+          #curl -L https://github.com/neo4j-contrib/neo4j-graph-algorithms/releases/download/3.5.4.0/graph-algorithms-algo-3.5.4.0.jar -O
+          #cp graph-algorithms-algo-3.5.4.0.jar /plugins/
+          cp apoc-3.5.0.11-all.jar /plugins/
+          cp graphaware*.jar /plugins/
+          cp neo4j-graph-data-science*.jar /plugins/
+          cat <<'EOF' > mapping.json
+          {
+            "defaults": {
+              "nodes_index": "graph-node",
+              "relationships_index": "graph-relationship",
+              "key_property": "id",
+              "include_remaining_properties": true
+            },
+            "node_mappings": [
+              {
+                "condition": "allNodes()",
+                "type": "nodes",
+                "properties": {
+                  "labels": "getLabels()"
+                }
+              },
+              {
+                "condition": "hasLabel('CI')",
+                "type": "nodes",
+                "index": "ci",
+                "properties": {
+                  "labels": "getLabels()"
+                }
+              }
+            ],
+            "relationship_mappings": [
+              {
+                "condition": "isType('HAS_ALLOCATED_ADDRESS')",
+                "type": "relationship",
+                "properties": {
+                  "relationship": "query('MATCH (a)-[allot:HAS_ALLOCATED_ADDRESS]->(b) where id(allot) = {id} RETURN collect({name: type(allot), source_node: a.id, destination_node: b.id}) AS value')"
+                }
+              },
+              {
+                "condition": "isType('CLUSTER_MEMBER_OF')",
+                "type": "relationship",
+                "properties": {
+                  "relationship": "query('MATCH (a)-[c:CLUSTER_MEMBER_OF]->(b) where id(c) = {id} RETURN collect({name: type(c), source_node: a.id, destination_node: b.id}) AS value')"
+                }
+              },
+              {
+                "condition": "isType('NON_CRITICAL_RESOURCE_OF')",
+                "type": "relationship",
+                "properties": {
+                  "relationship": "query('MATCH (a)-[mof:NON_CRITICAL_RESOURCE_OF]->(b) where id(mof) = {id} RETURN collect({name: type(mof), source_node: a.id, destination_node: b.id}) AS value')"
+                }
+              },
+              {
+                "condition": "isType('CRITICAL_RESOURCE_OF')",
+                "type": "relationship",
+                "properties": {
+                  "relationship": "query('MATCH (a)-[p:CRITICAL_RESOURCE_OF]->(b)  where id(p) = {id} RETURN collect({name: type(p), source_node: a.id, destination_node: b.id}) AS value')"
+                }
+              },
+              {
+                "condition": "isType('SAME_AS')",
+                "type": "relationship",
+                "properties": {
+                  "relationship": "query('MATCH (a)-[s:SAME_AS]->(b)  where id(s) = {id} RETURN collect({name: type(s), source_node: a.id, destination_node: b.id}) AS value')"
+                }
+              },
+              {
+                "condition": "isType('CONNECTS')",
+                "type": "relationship",
+                "properties": {
+                  "relationship": "query('MATCH (a)-[ct:CONNECTS]->(b)  where id(ct) = {id} RETURN collect({name: type(ct), source_node: a.id, destination_node: b.id}) AS value')"
+                }
+              },
+              {
+                "condition": "isType('HOSTS')",
+                "type": "relationship",
+                "properties": {
+                  "relationship": "query('MATCH (a)-[hn:HOSTS]->(b)  where id(hn) = {id} RETURN collect({name: type(hn), source_node: a.id, destination_node: b.id}) AS value')"
+                }
+              }
+            ]
+          }
+          EOF
+          cp mapping.json /plugins/
+
+elasticsearch-core:
+  persistance:
+    enabled: true
+    storageClass: intelligeni-core
+    size: 10Gi
+  global:
+    kibanaEnabled: true
+  master:
+    replicas: 1
+  coordinating:
+    replicas: 1
+  data:
+    replicas: 1
+
+keycloak-core:
+  # fullnameOverride: "keycloak"
+  service:
+    type: NodePort
+    httpNodePort: 30108
+  imagePullSecrets:
+    - name: gcr-pull-secret
+  extraInitContainers: |
+    - name: import-data
+      image: us.gcr.io/automation-intelligeni-dev/core-extra-configs:vx.y.z
+      imagePullPolicy: IfNotPresent
+      command:
+        - sh
+      args:
+        - -c
+        - |
+          echo "Copying theme"
+          cp -R /config/keycloak/intelligenitheme/* /tmpthemes/
+          echo "Copying user-sync spi"
+          cp /config/keycloak/user-sync.jar /tmp/user-sync.jar
+      volumeMounts:
+        - name: spi-deployments
+          mountPath: /tmp
+        - name: custom-themes
+          mountPath: /tmpthemes
+  extraEnv: |
+    - name: KEYCLOAK_USER
+      valueFrom:
+        secretKeyRef:
+          name: {{ .Release.Name }}-keycloakinitialadmin
+          key: username
+    - name: KEYCLOAK_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: {{ .Release.Name }}-keycloakinitialadmin
+          key: password
+  extraEnvFrom: |
+    - configMapRef:
+        name: {{ .Release.Name }}-keycloak-config
+  nodeSelector: {}
+    # preemptible: "false"
+  extraVolumes: |
+    - name: spi-deployments
+      emptyDir: {}
+    - name: custom-themes
+      emptyDir: {}
+  extraVolumeMounts: |
+    - name: spi-deployments
+      mountPath: /opt/jboss/keycloak/standalone/deployments/
+    - name: custom-themes
+      mountPath: /opt/jboss/keycloak/themes/intelligeni-theme
+  args:
+  ingress:
+    enabled: false
+    rules:
+      - host: dev.intelligeni.com
+        paths:
+          - /auth
+    tls:
+      - hosts:
+          - dev.intelligeni.com
+        secretName: intelligeni-ca-cert
+  postgresql:
+    enabled: false
+
+ingress-nginx-core:
+  enabled: true
+  controller:
+    addHeaders:
+      x-frame-options: SAMEORIGIN
+      cache-control: no-store, no-cache, must-revalidate, proxy-revalidate, private
+      pragma: no-cache
+      x-xss-protection: 1; mode=block
+      x-content-type-options: nosniff
+    resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 400Mi
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80
+    metrics:
+      enabled: true
+      service:
+        annotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "10254"
+  defaultBackend:
+    enabled: true
+  serviceAccount:
+    create: true
+    name: core-nginx-ingress
+
+spark-operator-core:
+  replicaCount: 2
+  nameOverride: "core-spark-operator"
+  sparkJobNamespace: "intelligeni-core"
+  controllerThreads: 10
+  webhook:
+    # -- Enable webhook server
+    enable: true
+    namespaceSelector: ""
+  metrics:
+    # -- Enable prometheus mertic scraping
+    enable: true
+  batchScheduler:
+    # -- Enable batch scheduler for spark jobs scheduling. If enabled, users can specify batch scheduler name in spark application
+    enable: false
+  leaderElection:
+    # -- Leader election lock name.
+    # Ref: https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/blob/master/docs/user-guide.md#enabling-leader-election-for-high-availability.
+    lockName: "core-spark-operator-lock"
+  serviceAccounts:
+    spark:
+      # -- Create a service account for spark apps
+      create: true
+      # -- Optional name for the spark service account
+      # name: "spark-service-account"
+    sparkoperator:
+      # -- Create a service account for the operator
+      create: true
+      # -- Optional name for the operator service account
+      # name: "spark-operator-service-account"
