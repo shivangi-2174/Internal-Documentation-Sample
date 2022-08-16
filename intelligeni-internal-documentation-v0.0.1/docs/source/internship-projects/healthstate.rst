@@ -5,7 +5,7 @@ Health State Computation Model
 Sample Knowledge Graph
 **************
 
-.. figure:: Picture1.JPG
+.. figure:: Picture1.PNG
     :alt: Process
     :figclass: align-center
 
