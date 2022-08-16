@@ -1,0 +1,62 @@
+[
+  {
+    "src_state": "low_on_consumable_resources",
+    "rel": "HOSTS",
+    "dst_state": "slow_response"
+  },
+  {
+    "src_state": "slow_response",
+    "rel": "CLUSTER_MEMBER_OF",
+    "dst_state": "low_on_consumable_resources"
+  },
+  {
+    "src_state": "outage",
+    "rel": "CLUSTER_MEMBER_OF",
+    "dst_state": "unreachable"
+  },
+  {
+    "src_state": "choked",
+    "rel": "CRITICAL_RESOURCE_OF",
+    "dst_state": "slow_response"
+  },
+  {
+  "src_state": "slow_response",
+  "rel": "CRITICAL_RESOURCE_OF",
+  "dst_state": "slow_response"
+  },
+  {
+    "src_state": "slow_response",
+    "rel": "HOSTS",
+    "dst_state": "slow_response"
+  },
+  {
+  "src_state": "choked",
+  "rel": "IS_GATEWAY_TO",
+  "dst_state": "unreachable"
+  },
+  {
+  "src_state": "outage",
+  "rel": "CRITICAL_RESOURCE_OF",
+  "dst_state": "outage"
+  },
+  {
+    "src_state": "low_on_consumable_resources",
+    "rel": "CRITICAL_RESOURCE_OF",
+    "dst_state": "slow_response"
+  },
+  {
+    "src_state": "low_on_consumable_resources",
+    "rel": "HOSTS",
+    "dst_state": "slow_response"
+  },
+  {
+    "src_state": "error_prone",
+    "rel": "CRITICAL_RESOURCE_OF",
+    "dst_state": "error_prone"
+  },
+  {
+    "src_state": "error_prone",
+    "rel": "HOSTS",
+    "dst_state": "error_prone"
+  }
+]
