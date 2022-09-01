@@ -15,8 +15,8 @@ Problem Statement
 Technology Stack
 ########
 
-- Scala/Spark
-- Pregel API
+- Scala with Spark
+- GraphX using Pregel API
 
 **GraphX Programming Guide** - `<https://spark.apache.org/docs/latest/graphx-programming-guide.html>`_
 
@@ -73,9 +73,6 @@ To propagate the health states, we have maintained a rulebook.json file which st
     :figclass: align-center
 
 
-https://github.com/shivangi-2174/Internal-Documentation-Sample/blob/main/intelligeni-internal-documentation-v0.0.1/docs/source/internship-projects/rulebook.json
-
-
 **Algorithm** 
 *******
 
@@ -84,6 +81,20 @@ Using this rulebook, we are using nested mapping, where our key will be the **so
 - **Map  ( srcState ->  Map  (rel -> dstState)  )**
 
 Logic behind the algorithm is that for each CI in a particular health state, we are checking the value in the map for the src_state as well for the inner map with key as relationship and value as dst_state.
+
+**Comparison for input to Pregel Algorithm** 
+############
+
+Before Merge
+************
+- **For Health State** - (parent_id, Set of States, status, parent_ci_type, timestamp,gradient)
+
+- **For Health Score** - (newVal, inMap, status, parent_id, parent_id, parent_ci_type, oldVal)
+
+After Merge
+**********
+- **For both Health State and Health Score** - (parent_id, Set of States, status, parent_ci_type, timestamp, gradient, newVal, oldVal, inMap, ci_id)
+
 
 Result
 ######
